@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";

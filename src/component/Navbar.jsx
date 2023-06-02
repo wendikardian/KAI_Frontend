@@ -14,7 +14,7 @@ import { Button, Modal } from "antd";
 const { Header, Content, Footer } = Layout;
 
 const Navbar = () => {
-//   const { isLogin, setIsLogin, userDataList } = useContext(DataCtx);
+  //   const { isLogin, setIsLogin, userDataList } = useContext(DataCtx);
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [filteredUser, setFilteredUser] = useState([]);
@@ -59,6 +59,11 @@ const Navbar = () => {
             mode="horizontal"
             style={{ float: "right", backgroundColor: "#6C6C6C" }}
           >
+
+            <p className="navbar-item"><Link to="/schedule">Schedule</Link> </p>
+            <p className="navbar-item"><Link to="/find_ticket">Find Ticket</Link></p>
+            <p className="navbar-item"><Link to="/my_ticket">My Ticket</Link></p>
+            <p className="navbar-item"><Link to="/station">Station</Link></p>
             <img
               style={{ width: 50, height: 50, borderRadius: 100 }}
               src={Cookies.get("image")}

@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { url } from "../../GlobalData";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -12,12 +15,30 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  const submit = () => {
+  const submit = async () => {
     console.log(username);
     console.log(password);
     console.log(passwordRepeat);
     console.log(email);
-    navigate("/login");
+    const data = {
+      'username': username,
+      'password': password,
+      'email': email,
+    };
+
+    if (password !== passwordRepeat) {
+      console.log("password is not same !");
+    } else {
+      axios
+        .post('http://localhost:3000/user', data)
+        .then((response) => {
+          console.log(response);
+          navigate("/login");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
