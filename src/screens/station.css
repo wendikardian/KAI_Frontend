@@ -1,0 +1,118 @@
+.station-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.station-data {
+  /* background-color: antiquewhite; */
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-station {
+  width: 300px;
+  height: 300px;
+  background-color: rgb(255, 255, 255);
+  margin: 10px;
+  padding: 20px;
+  border-radius: 30px;
+  text-align: center;
+  /* give me a beauty box shadow1 */
+  box-shadow: 3px 2px 5px 0px rgba(165, 151, 151, 0.75);
+}
+
+.card-station:hover {
+  /* give me a beauty box shadow2 */
+  box-shadow: 3px 2px 5px 0px rgba(56, 55, 55, 0.75);
+  cursor: pointer;
+}
+
+.plus-button {
+  background-color: rgb(0, 119, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 20px;
+  width: 50px;
+  height: 50px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+.plus-text {
+  font-size: 32px;
+  margin-top: 30px;
+  font-weight: bold;
+  color: wheat;
+}
+
+.plus-button:hover {
+  background-color: rgb(0, 255, 255);
+  cursor: pointer;
+}
+
+.plus-text:hover {
+  color: black;
+}
+
+.form-add-station {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-con {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+}
+
+.container-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  /* background-color: aliceblue; */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 3px 2px 5px 0px rgba(165, 151, 151, 0.75);
+}
+
+input[type="text"] {
+  width: 500px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  margin: 10px;
+  font-size: 1.2em;
+  border-bottom: 1px solid rgb(38, 43, 49);
+}
+
+
+.edit-p{
+    color: rgb(0, 119, 255);
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.delete-p{
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}

@@ -30,7 +30,7 @@ export default function Register() {
       console.log("password is not same !");
     } else {
       axios
-        .post('http://localhost:3000/user', data)
+        .post(url + '/user', data)
         .then((response) => {
           console.log(response);
           navigate("/login");

@@ -9,6 +9,8 @@ import React, { useState, useContext, useEffect } from "react";
 // import { DataCtx } from "./../Data/Data.js";
 import { useNavigate } from "react-router";
 import { Button, Modal } from "antd";
+import { message } from "antd";
+// import { useEffect } from "react";
 // import logo from "./logo2.png";
 
 const { Header, Content, Footer } = Layout;
@@ -30,10 +32,18 @@ const Navbar = () => {
     setConfirmLoading(false);
     // setIsLogin(false);
     // Cookies.remove('user')
-    Cookies.remove("email");
+    Cookies.remove("username");
+    // message.error("Logout Success");
     // Cookies.remove('token')
-    navigate("/");
+    // navigate("/");
   };
+
+  useEffect(() => {
+    if(Cookies.get('username') === undefined){
+      navigate('/')
+    }
+  }, [Cookies.get('username')])
+
   return (
     <>
       <Layout>
@@ -59,11 +69,18 @@ const Navbar = () => {
             mode="horizontal"
             style={{ float: "right", backgroundColor: "#6C6C6C" }}
           >
-
-            <p className="navbar-item"><Link to="/schedule">Schedule</Link> </p>
-            <p className="navbar-item"><Link to="/find_ticket">Find Ticket</Link></p>
-            <p className="navbar-item"><Link to="/my_ticket">My Ticket</Link></p>
-            <p className="navbar-item"><Link to="/station">Station</Link></p>
+            <p className="navbar-item">
+              <Link to="/schedule">Schedule</Link>{" "}
+            </p>
+            <p className="navbar-item">
+              <Link to="/find_ticket">Find Ticket</Link>
+            </p>
+            <p className="navbar-item">
+              <Link to="/my_ticket">My Ticket</Link>
+            </p>
+            <p className="navbar-item">
+              <Link to="/station">Station</Link>
+            </p>
             <img
               style={{ width: 50, height: 50, borderRadius: 100 }}
               src={Cookies.get("image")}

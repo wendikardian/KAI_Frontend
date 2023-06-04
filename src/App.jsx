@@ -9,6 +9,8 @@ import Schedule from './screens/Schedule';
 import FindTicket from './screens/FindTicket';
 import MyTicket from './screens/MyTicket';
 import Station from './screens/Station';
+import addStation from './screens/addStation';
+import editStation from './screens/editStation';
 
 function App() {
   return (
@@ -21,7 +23,9 @@ function App() {
         <Route exact path="/find_ticket" Component={FindTicket} />
         <Route exact path="/my_ticket" Component={MyTicket} />
         <Route exact path="/station" Component={Station} />
-
+        <Route exact path="/add_station" Component={addStation} />
+        {/* add route with params */}
+        <Route exact path="/edit_station/:id" Component={editStation} />
     </Routes>
     </Router>
   )

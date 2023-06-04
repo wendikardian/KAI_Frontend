@@ -3,6 +3,10 @@ import React from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { url } from "../../GlobalData";
+import { message } from "antd";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -11,15 +15,32 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(username);
-    console.log(password);
-  }, [username, password]);
+    // check cookie if username exist redirect
+    if (Cookies.get("username")) {
+      navigate("/schedule");
+    }
+  }, []);
 
   const submit = () => {
-    console.log(username)
-    console.log(password)
-    navigate('/')
- }
+    const data = {
+      username: username,
+      password: password,
+    };
+    axios
+      .post(url + "/login", data)
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem("token", response.data.token);
+        // alert("success");
+        message.success("Login Success");
+        navigate("/schedule");
+        Cookies.set("username", username, { expires: 1 });
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("error");
+      });
+  };
   return (
     <div className="login-container">
       <div className="welcome-login">
@@ -50,7 +71,9 @@ export default function Login() {
                 }}
               />
             </div>
-            <button type="button" className="login" onClick={submit} >Login</button>
+            <button type="button" className="login" onClick={submit}>
+              Login
+            </button>
             <p>
               {" "}
               Doesnt have an account ?{" "}
