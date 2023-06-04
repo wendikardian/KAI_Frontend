@@ -14,10 +14,36 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import { Modal } from "antd";
+import { message } from "antd";
+import { useContext } from "react";
+import { DataCtx } from "../Data/DataCtx";
 
 export default function Station() {
   const [station, setStation] = useState([]);
+  const { profile } = useContext(DataCtx);
   const [first, setFirts] = useState(false);
+  const [selectedId, setSelectedId] = useState(1);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    axios.delete(url + "/station/" + selectedId).then(() => {
+      console.log("deleted");
+      message.success("Station deleted successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      // refresh page
+    });
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   const navigate = useNavigate();
   useEffect(() => {
     axios
@@ -36,6 +62,12 @@ export default function Station() {
   return (
     <div>
       <Navbar />
+      <Modal
+        title="Delete Station"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      />
       <div className="station-container">
         <h1>Station</h1>
         <div className="station-data">
@@ -54,24 +86,43 @@ export default function Station() {
                   {" "}
                   <HomeOutlined /> {item.address}
                 </p>
-                <p className="edit-p" onClick={
-                  () => {
-                    navigate("/edit_station/" + item.id)
-                  }
-                } > <EditOutlined /> Edit Station </p>
-                <p className="delete-p" > <DeleteOutlined /> Delete Station </p>
+                {profile.role == 2 ? (
+                  <>
+                    <p
+                      className="edit-p"
+                      onClick={() => {
+                        navigate("/edit_station/" + item.id);
+                      }}
+                    >
+                      {" "}
+                      <EditOutlined /> Edit Station{" "}
+                    </p>
+                    <p
+                      className="delete-p"
+                      onClick={() => {
+                        showModal();
+                        setSelectedId(item.id);
+                      }}
+                    >
+                      {" "}
+                      <DeleteOutlined /> Delete Station{" "}
+                    </p>
+                  </>
+                ) : null}
               </div>
             );
           })}
 
-          <div
-            className="plus-button"
-            onClick={() => {
-              navigate("/add_station");
-            }}
-          >
-            <p className="plus-text">+</p>
-          </div>
+          {profile.role == 2 ? (
+            <div
+              className="plus-button"
+              onClick={() => {
+                navigate("/add_station");
+              }}
+            >
+              <p className="plus-text">+</p>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

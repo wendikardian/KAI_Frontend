@@ -2,68 +2,60 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import Navbar from "../component/Navbar";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { url } from "../../GlobalData";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { url } from "../../GlobalData";
 import { Button } from "antd";
-import moment from "moment";
 import { useContext } from "react";
 import { DataCtx } from "../Data/DataCtx";
 
-export default function Schedule() {
-  const navigation = useNavigate();
+export default function RouteTrain() {
+  const navigate = useNavigate();
+  const [route, setRoute] = useState([]);
   const { profile, setProfile } = useContext(DataCtx);
-  const [schedule, setSchedule] = useState([]);
   useEffect(() => {
-    axios.get(url + "/schedule").then((response) => {
+    axios.get(url + "/route").then((response) => {
       console.log(response.data);
-      setSchedule(response.data);
+      setRoute(response.data);
     });
   }, []);
 
   return (
     <div>
       <Navbar />
-      <h1 className="header-style">Schedule</h1>
+      <h1 className="header-style">Route</h1>
       <div className="route-table">
         <table>
           <tr>
-            {/* <th>Route ID</th> */}
-            <th>Train Name</th>
-            <th>Date</th>
+            <th>Route ID</th>
             <th>Departure Station</th>
             <th>Departure City</th>
             <th>Arrival Station</th>
             <th>Arrival City</th>
-
+            <th>Est. Distance</th>
             <th>Action</th>
           </tr>
-          {schedule.map((item) => {
-            // console.log(item.datetime)
-            var newDate = moment(item.datetime * 1000).format(
-              "MM/DD/YYYY hh:MM"
-            );
+          {route.map((item) => {
             return (
               <tr>
-                <td>{item.name}</td>
-                {/* create convert */}
-                <td>{newDate}</td>
+                <td>{item.id}</td>
                 <td>{item.departure_station_name}</td>
                 <td>{item.departure_station_city}</td>
                 <td>{item.arrival_station_name}</td>
                 <td>{item.arrival_station_city}</td>
+                <td>{item.est_distance}</td>
                 <td>
                   {profile.role == 1 ? (
+                    <Button>Find Schedule</Button>
+                  ) : (
                     <Button
                       onClick={() => {
-                        navigation("/book_ticket/" + item.id);
+                        navigate("/add_schedule/" + item.id);
                       }}
                     >
-                      Book Ticket
+                      Add Schedule
                     </Button>
-                  ) : (
-                    <Button>See passenger</Button>
                   )}
                 </td>
               </tr>
@@ -71,6 +63,16 @@ export default function Schedule() {
           })}
         </table>
       </div>
+      {profile.role == 2 ? (
+        <div
+          className="plus-button"
+          onClick={() => {
+            navigate("/add_route");
+          }}
+        >
+          <p className="plus-text">+</p>
+        </div>
+      ) : null}
     </div>
   );
 }

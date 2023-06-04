@@ -7,25 +7,40 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { url } from "../../GlobalData";
-import './station.css'
+import "./station.css";
 import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function editStation() {
   const { id } = useParams();
   const [station, setStation] = useState();
   const [city, setCity] = useState();
   const [address, setAddress] = useState();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log(id);
-        axios.get(url+ '/station/' + id).then((response) => {
-            console.log(response.data);
-            setStation(response.data.name);
-            setCity(response.data.city);
-            setAddress(response.data.address);
-        })
+  useEffect(() => {
+    console.log(id);
+    axios.get(url + "/station/" + id).then((response) => {
+      console.log(response.data);
+      setStation(response.data.name);
+      setCity(response.data.city);
+      setAddress(response.data.address);
+    });
+  }, [id]);
 
-    }, [id]);
+  const editData = () => {
+    const data = {
+      name: station,
+      city: city,
+      address: address,
+    };
+    axios.put(url + "/station/" + id, data).then(() => {
+      console.log(data);
+        message.success("Station edited successfully");
+      navigate("/station");
+    });
+  };
 
   return (
     <div>
@@ -76,6 +91,7 @@ export default function editStation() {
             <Button
               className="button-form"
               type="primary"
+              onClick={editData}
               style={{ width: 100, height: 40, marginTop: 20 }}
             >
               Edit Data !

@@ -32,6 +32,7 @@ const Navbar = () => {
     setConfirmLoading(false);
     // setIsLogin(false);
     // Cookies.remove('user')
+    Cookies.remove("user_id");
     Cookies.remove("username");
     // message.error("Logout Success");
     // Cookies.remove('token')
@@ -39,10 +40,10 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if(Cookies.get('username') === undefined){
-      navigate('/')
+    if (Cookies.get("username") === undefined) {
+      navigate("/");
     }
-  }, [Cookies.get('username')])
+  }, [Cookies.get("username")]);
 
   return (
     <>
@@ -70,20 +71,23 @@ const Navbar = () => {
             style={{ float: "right", backgroundColor: "#6C6C6C" }}
           >
             <p className="navbar-item">
-              <Link to="/schedule">Schedule</Link>{" "}
+              <Link to="/route_train">Route</Link>{" "}
             </p>
             <p className="navbar-item">
-              <Link to="/find_ticket">Find Ticket</Link>
+              <Link to="/schedule">Schedule</Link>{" "}
             </p>
             <p className="navbar-item">
               <Link to="/my_ticket">My Ticket</Link>
             </p>
-            <p className="navbar-item">
+            <p className="navbar-item" style={{marginRight: 100}}>
               <Link to="/station">Station</Link>
+            </p>
+            <p className="navbar-item" style={{marginLeft: 80}}>
+              <Link to="/profile">Profile</Link>
             </p>
             <img
               style={{ width: 50, height: 50, borderRadius: 100 }}
-              src={Cookies.get("image")}
+              src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}
             />
             <h5
               style={{

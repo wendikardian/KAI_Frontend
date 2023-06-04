@@ -30,11 +30,16 @@ export default function Login() {
       .post(url + "/login", data)
       .then((response) => {
         console.log(response);
-        localStorage.setItem("token", response.data.token);
-        // alert("success");
+        // localStorage.setItem("token", response.data.token);
         message.success("Login Success");
         navigate("/schedule");
         Cookies.set("username", username, { expires: 1 });
+        // setTimeout(() => {
+        // }, 1000)
+
+        // refresh windows
+        window.location.reload();
+        // alert("success");
       })
       .catch((error) => {
         console.log(error);
