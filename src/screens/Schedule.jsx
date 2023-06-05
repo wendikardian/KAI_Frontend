@@ -63,7 +63,11 @@ export default function Schedule() {
                       Book Ticket
                     </Button>
                   ) : (
-                    <Button>See passenger</Button>
+                    <Button
+                    onClick={() => {
+                      navigation("/passanger/" + item.id);
+                    }}
+                    >See passenger</Button>
                   )}
                 </td>
               </tr>

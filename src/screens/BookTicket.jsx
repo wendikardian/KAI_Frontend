@@ -20,6 +20,14 @@ export default function BookTicket() {
   const [selectedSeat, setSelectedSeat] = useState(1);
   const [name, setName] = useState("");
   const [price, setPrice] = useState(1);
+  const [passanger, setPassanger] = useState([]);
+  useEffect(() => {
+    axios.get(url + "/passanger/" + id).then((response) => {
+      console.log(response.data);
+      setPassanger(response.data);
+    });
+  }, []);
+
   useEffect(() => {
     axios.get(url + "/schedule/" + id).then((response) => {
       console.log(response.data);
@@ -32,6 +40,8 @@ export default function BookTicket() {
       console.log(response.data);
       setSeat(response.data);
     });
+
+    // setSeat(filteredSeats);
   }, []);
 
   useEffect(() => {
@@ -40,7 +50,7 @@ export default function BookTicket() {
 
   const booking = () => {
     const data = {
-      id: moment().unix() ,
+      id: moment().unix(),
       status: 1,
       name: name,
       schedule_id: id,
@@ -49,13 +59,12 @@ export default function BookTicket() {
       user_id: profile.id,
     };
     axios.post(url + "/booking", data).then((response) => {
-        console.log(response.data);
-        message.success("Ticket booked successfully");
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
-        }
-    );
+      console.log(response.data);
+      message.success("Ticket booked successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    });
   };
 
   return (
@@ -125,7 +134,6 @@ export default function BookTicket() {
             className="input-text"
             onChange={(event) => {
               setSelectedSeat(event.target.value);
-              // find the price of the selected id
               seat.map((item) => {
                 if (item.id == event.target.value) {
                   setPrice(item.price);
@@ -135,11 +143,17 @@ export default function BookTicket() {
           >
             <option value="">Select an option for your seat</option>
             {seat.map((item) => {
-              return (
-                <option value={item.id} key={item.id}>
-                  {item.id}
-                </option>
+              const filtered = passanger.filter(
+                (data) => data.seat_id == item.id
               );
+              console.log(filtered);
+              if (filtered.length == 0) {
+                return (
+                  <option value={item.id} key={item.id}>
+                    {item.id}
+                  </option>
+                );
+              }
             })}
           </select>
           <div className="input-con">

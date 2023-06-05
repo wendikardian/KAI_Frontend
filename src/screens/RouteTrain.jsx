@@ -34,7 +34,7 @@ export default function RouteTrain() {
             <th>Arrival Station</th>
             <th>Arrival City</th>
             <th>Est. Distance</th>
-            <th>Action</th>
+            <th>{profile.role == 1 ? null : "Action"}</th>
           </tr>
           {route.map((item) => {
             return (
@@ -46,9 +46,7 @@ export default function RouteTrain() {
                 <td>{item.arrival_station_city}</td>
                 <td>{item.est_distance}</td>
                 <td>
-                  {profile.role == 1 ? (
-                    <Button>Find Schedule</Button>
-                  ) : (
+                  {profile.role == 1 ? null : (
                     <Button
                       onClick={() => {
                         navigate("/add_schedule/" + item.id);

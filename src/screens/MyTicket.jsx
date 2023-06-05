@@ -17,6 +17,8 @@ export default function MyTicket() {
   const [schedule, setSchedule] = useState([]);
   const [first, setFirst] = useState(false);
   const [ticket, setTicket] = useState([]);
+  const [wagon, setWagon] = useState([]);
+  const [seat, setSeat] = useState([]);
   // useEffect(() => {
   //   if (profile.id > 0 && first == false) {
 
@@ -36,8 +38,22 @@ export default function MyTicket() {
   };
 
   useEffect(() => {
-    axios.get(url + "/schedule").then((response) => {
+    axios.get(url + "/wagon").then((response) => {
       console.log(response.data);
+      setWagon(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios.get(url + "/seat").then((response) => {
+      console.log(response.data);
+      setSeat(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios.get(url + "/schedule").then((response) => {
+      // console.log(response.data);
       setSchedule(response.data);
     });
     console.log(Cookies.get("user_id"));
@@ -55,7 +71,12 @@ export default function MyTicket() {
             const filteredSchedule = schedule.filter((schedule) =>
               schedule.id == item.schedule_id ? schedule : null
             );
-            console.log(filteredSchedule);
+            const seatTicket = seat.find((seat) => seat.id == item.seat_id);
+            const wagonSeat = seatTicket.wagon_id;
+            const facility = wagon.find(
+              (wagon_item) => wagon_item.id == wagonSeat
+            );
+            console.log(facility);
             return (
               <div
                 className={
@@ -68,6 +89,22 @@ export default function MyTicket() {
                 <p>
                   {" "}
                   <b> Code Ticket </b> : {item.id}
+                </p>
+                <p>
+                  {" "}
+                  <b> Seat </b> : {item.seat_id}
+                </p>
+                <p>
+                  {" "}
+                  <b> Wagon </b> : {wagonSeat}
+                </p>
+                <p>
+                  {" "}
+                  <b> Class </b> : {facility.class}
+                </p>
+                <p>
+                  {" "}
+                  <b> Facility </b> : {facility.facility}
                 </p>
                 <p>
                   {" "}
@@ -114,11 +151,15 @@ export default function MyTicket() {
                   )}
                 </p>
                 <br />
-                {item.payment_status == 1 ? <Button
-                onClick={() => {
-                  navigation("/payment/" + item.id);
-                }}
-                >Paid</Button> : null}
+                {item.payment_status == 1 ? (
+                  <Button
+                    onClick={() => {
+                      navigation("/payment/" + item.id);
+                    }}
+                  >
+                    Paid
+                  </Button>
+                ) : null}
               </div>
             );
           })}

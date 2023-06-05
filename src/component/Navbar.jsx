@@ -3,19 +3,17 @@
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import { DingdingOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 import React, { useState, useContext, useEffect } from "react";
-// import { DataCtx } from "./../Data/Data.js";
 import { useNavigate } from "react-router";
 import { Button, Modal } from "antd";
 import { message } from "antd";
-// import { useEffect } from "react";
-// import logo from "./logo2.png";
+import { DataCtx } from "../Data/DataCtx";
 
 const { Header, Content, Footer } = Layout;
 
 const Navbar = () => {
+  const { profile } = useContext(DataCtx);
   //   const { isLogin, setIsLogin, userDataList } = useContext(DataCtx);
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -76,18 +74,22 @@ const Navbar = () => {
             <p className="navbar-item">
               <Link to="/schedule">Schedule</Link>{" "}
             </p>
-            <p className="navbar-item">
-              <Link to="/my_ticket">My Ticket</Link>
-            </p>
-            <p className="navbar-item" style={{marginRight: 100}}>
+            {profile.role === 1 ? (
+              <p className="navbar-item">
+                <Link to="/my_ticket">My Ticket</Link>
+              </p>
+            ) : null}
+            <p className="navbar-item" style={{ marginRight: 100 }}>
               <Link to="/station">Station</Link>
             </p>
-            <p className="navbar-item" style={{marginLeft: 80}}>
+            <p className="navbar-item" style={{ marginLeft: 80 }}>
               <Link to="/profile">Profile</Link>
             </p>
             <img
               style={{ width: 50, height: 50, borderRadius: 100 }}
-              src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}
+              src={
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              }
             />
             <h5
               style={{

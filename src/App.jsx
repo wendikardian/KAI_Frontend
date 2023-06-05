@@ -18,6 +18,7 @@ import addSchedule from "./screens/addSchedule";
 import Profile from "./screens/Profile";
 import BookTicket from "./screens/BookTicket";
 import Payment from "./screens/Payment";
+import See_Passanger from "./screens/See_Passanger";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route exact path="/add_schedule/:id" Component={addSchedule} />
           <Route exact path="/book_ticket/:id" Component={BookTicket} />
           <Route exact path="/payment/:id" Component={Payment} />
+          <Route exact path="/passanger/:id" Component={See_Passanger} />
         </Routes>
       </DataProvider>
     </Router>
