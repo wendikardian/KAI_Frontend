@@ -92,6 +92,10 @@ export default function MyTicket() {
                 </p>
                 <p>
                   {" "}
+                  <b> Price </b> : $ {item.price}
+                </p>
+                <p>
+                  {" "}
                   <b> Seat </b> : {item.seat_id}
                 </p>
                 <p>

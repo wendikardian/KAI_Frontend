@@ -46,7 +46,7 @@ export default function editStation() {
     <div>
       <Navbar />
       <div className="form-add-station">
-        <h1 style={{ marginTop: 30, marginBottom: 40 }}>Add Station</h1>
+        <h1 style={{ marginTop: 30, marginBottom: 40 }}>Edit Station</h1>
         <div className="container-form">
           <div className="input-con">
             <label htmlFor="" className="label-form">
